@@ -20,7 +20,7 @@ export default defineConfig({
   use: {
     baseURL: ENV.baseUrl,
     headless: ENV.headless,
-
+    
     // Kurumsal debug paketi:
     trace: 'on-first-retry',
     video: 'retain-on-failure',

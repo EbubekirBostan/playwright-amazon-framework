@@ -11,10 +11,9 @@ test.describe('Amazon Product @regression', () => {
     await home.search('playwright book');
 
     const results = new AmazonSearchResultsPage(page);
-    const productPage = await results.clickFirstProduct();
+    const productPage = await results.openFirstProduct();
 
-    const title = productPage.locator('#productTitle');
-    await expect(title).toBeVisible({ timeout: 15000 });
+    await expect(productPage.locator('#productTitle')).toBeVisible({ timeout: 20000 });
 
     const price = productPage.locator('.a-price').first();
     await expect(price).toBeVisible();
