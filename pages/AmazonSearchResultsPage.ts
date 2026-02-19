@@ -5,15 +5,21 @@ export class AmazonSearchResultsPage {
   readonly firstProductLink: Locator;
 
   constructor(private page: Page) {
-    // Gerçek ürün başlığı linki (h2 içindeki a)
+    // En stabil: ürün linkleri genelde /dp/ içerir
     this.firstProductLink = page
-      .locator('[data-component-type="s-search-result"] h2 a')
+      .locator('[data-component-type="s-search-result"] a[href*="/dp/"]')
       .first();
   }
 
   async openFirstProduct(): Promise<Page> {
-    await expect(this.firstProductLink).toBeVisible({ timeout: 15000 });
+    // sonuçların geldiğini doğrula
+    await expect(this.page.locator('[data-component-type="s-search-result"]').first())
+      .toBeVisible({ timeout: 20000 });
 
+    // popup her yerde çıkabilir
+    await handleAmazonConsent(this.page);
+
+    await expect(this.firstProductLink).toBeVisible({ timeout: 20000 });
     await this.firstProductLink.click();
 
     await this.page.waitForLoadState('domcontentloaded');

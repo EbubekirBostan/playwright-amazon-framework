@@ -2,6 +2,7 @@ import { expect } from '@playwright/test';
 import { test, gotoHomeAndAccept } from '../_base';
 import { AmazonHomePage } from '../../../pages/AmazonHomePage';
 import { AmazonSearchResultsPage } from '../../../pages/AmazonSearchResultsPage';
+import { handleAmazonConsent } from '../../../utils/consent';
 
 test.describe('Amazon Product @regression', () => {
   test('user can open product and see price', async ({ page }) => {
@@ -9,6 +10,8 @@ test.describe('Amazon Product @regression', () => {
 
     const home = new AmazonHomePage(page);
     await home.search('playwright book');
+
+    await handleAmazonConsent(page);
 
     const results = new AmazonSearchResultsPage(page);
     const productPage = await results.openFirstProduct();

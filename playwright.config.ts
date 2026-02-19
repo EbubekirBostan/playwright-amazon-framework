@@ -16,14 +16,15 @@ export default defineConfig({
   ['html', { open: 'never' }],
   ['allure-playwright'],
 ],
+  globalSetup: './global-setup.ts',
 
   use: {
     baseURL: ENV.baseUrl,
     headless: ENV.headless,
-    
+    storageState: 'storageState.json',    
     // Kurumsal debug paketi:
-    trace: 'on-first-retry',
-    video: 'retain-on-failure',
+    trace: process.env.CI ? 'on-first-retry' : 'off',
+    video: process.env.CI ? 'retain-on-failure' : 'off',
     screenshot: 'only-on-failure',
 
     actionTimeout: 10_000,
