@@ -1,24 +1,17 @@
-import { expect } from '@playwright/test';
-import { test, gotoHomeAndAccept } from '../_base';
-import { AmazonHomePage } from '../../../pages/AmazonHomePage';
-import { AmazonSearchResultsPage } from '../../../pages/AmazonSearchResultsPage';
+import { test, expect } from '../../../fixtures/test';
 import { handleAmazonConsent } from '../../../utils/consent';
+import { testData } from '../../../fixtures/data';
 
 test.describe('Amazon Product @regression', () => {
-  test('user can open product and see price', async ({ page }) => {
-    await gotoHomeAndAccept(page);
+  test('user can open product and see price', async ({ page, home, results, gotoHome }) => {
+    await gotoHome();
 
-    const home = new AmazonHomePage(page);
-    await home.search('playwright book');
+    await home.search(testData.searchTerms.regression);
+    await handleAmazonConsent(page); // arama sonrası popup tekrar çıkabiliyor
 
-    await handleAmazonConsent(page);
-
-    const results = new AmazonSearchResultsPage(page);
     const productPage = await results.openFirstProduct();
 
     await expect(productPage.locator('#productTitle')).toBeVisible({ timeout: 20000 });
-
-    const price = productPage.locator('.a-price').first();
-    await expect(price).toBeVisible();
+    await expect(productPage.locator('.a-price').first()).toBeVisible({ timeout: 20000 });
   });
 });
