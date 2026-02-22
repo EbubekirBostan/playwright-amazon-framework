@@ -2,10 +2,12 @@ import { test as base, expect, type Page } from '@playwright/test';
 import { handleAmazonConsent } from '../utils/consent'
 import { AmazonHomePage } from '../pages/AmazonHomePage';
 import { AmazonSearchResultsPage } from '../pages/AmazonSearchResultsPage';
+import { AmazonLoginPage } from '../pages/AmazonLoginPage';
 
 type Pages = {
   home: AmazonHomePage;
   results: AmazonSearchResultsPage;
+  login: AmazonLoginPage;
 };
 
 type Helpers = {

@@ -11,4 +11,10 @@ test.describe('Amazon Search @smoke', () => {
     await expect(page.locator('[data-component-type="s-search-result"]').first())
       .toBeVisible({ timeout: 20000 });
   });
-});
+  test.only('benutzer verifiziert die Login Seite', async ({ page, home,login, gotoHome }) => {
+    await gotoHome();
+    await home.hoverUndCLickLoginLink();
+    await login.fillEmailAndContinue(process.env.EMAIL!);
+
+  });
+})

@@ -21,3 +21,11 @@ npx playwright install
 ## Run Tests
 
 npx playwright test --project=chromium
+
+## Architecture
+
+- Fixtures-based test architecture
+- Page Object Model
+- Global setup with storage state
+- Consent handling for public websites
+- Smoke & Regression tagging

@@ -3,10 +3,14 @@ import { Page, Locator, expect } from '@playwright/test';
 export class AmazonHomePage {
   readonly searchBox: Locator;
   readonly searchButton: Locator;
+  readonly loginLink: Locator;
+  readonly anmeldenLink: Locator;
 
   constructor(private page: Page) {
     this.searchBox = page.locator('#twotabsearchtextbox');
     this.searchButton = page.locator('#nav-search-submit-button');
+    this.loginLink = page.locator('#nav-link-accountList');
+    this.anmeldenLink = page.getByRole('link', { name: 'Anmelden', exact: true })
   }
 
   async search(term: string) {
@@ -25,4 +29,10 @@ export class AmazonHomePage {
       await this.searchBox.press('Enter');
     }
   }
+  async hoverUndCLickLoginLink(){
+    await this.loginLink.hover().then(() => 
+      this.loginLink.click());
+    await this.anmeldenLink.click();
+  }
+
 }
