@@ -1,6 +1,7 @@
 import { test, expect } from '../../../fixtures/test';
 import { testData } from '../../../fixtures/data';
 
+
 test.describe('Amazon Search @smoke', () => {
   test('search returns results', async ({ page, home, gotoHome }) => {
     await gotoHome();
@@ -11,10 +12,11 @@ test.describe('Amazon Search @smoke', () => {
     await expect(page.locator('[data-component-type="s-search-result"]').first())
       .toBeVisible({ timeout: 20000 });
   });
-  test.only('benutzer verifiziert die Login Seite', async ({ page, home,login, gotoHome }) => {
+  test('login positive', async ({ loginAmazon, home, gotoHome }) => {
     await gotoHome();
-    await home.hoverUndCLickLoginLink();
-    await login.fillEmailAndContinue(process.env.EMAIL!);
-
+    await home.linkLoginHover();
+    await home.linkAnmeldenClick();
+    await loginAmazon.loginValidUser();
+    await loginAmazon.assertLoggedIn();
   });
-})
+});

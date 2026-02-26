@@ -10,7 +10,7 @@ export class AmazonHomePage {
     this.searchBox = page.locator('#twotabsearchtextbox');
     this.searchButton = page.locator('#nav-search-submit-button');
     this.loginLink = page.locator('#nav-link-accountList');
-    this.anmeldenLink = page.getByRole('link', { name: 'Anmelden', exact: true })
+    this.anmeldenLink = page.locator('.nav-action-signin-button')
   }
 
   async search(term: string) {
@@ -29,10 +29,10 @@ export class AmazonHomePage {
       await this.searchBox.press('Enter');
     }
   }
-  async hoverUndCLickLoginLink(){
-    await this.loginLink.hover().then(() => 
-      this.loginLink.click());
+  async linkLoginHover(){
+    await this.loginLink.hover();
+  }
+  async linkAnmeldenClick(){
     await this.anmeldenLink.click();
   }
-
 }

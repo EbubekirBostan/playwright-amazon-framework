@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 import { ENV } from './utils/env';
 
-export default defineConfig({
+export default defineConfig<{ email?: string; password?: string }>({
   testDir: './tests',
   timeout: 30_000,
   expect: { timeout: 10_000 },
@@ -21,6 +21,8 @@ export default defineConfig({
   use: {
     baseURL: ENV.baseUrl,
     headless: ENV.headless,
+    email:ENV.email,
+    password:ENV.password,    
     storageState: 'storageState.json',    
     // Kurumsal debug paketi:
     trace: process.env.CI ? 'on-first-retry' : 'off',

@@ -1,14 +1,13 @@
-import { chromium, FullConfig, expect } from '@playwright/test';
-import { handleAmazonConsent } from './utils/consent';
+import { chromium, FullConfig } from '@playwright/test';
+import { ensureHome } from './utils/ensureHome';
 
-async function globalSetup(_config: FullConfig) {
+async function globalSetup(config: FullConfig) {
+  const baseURL = config.projects[0].use.baseURL as string;
+
   const browser = await chromium.launch();
-  const page = await browser.newPage({ baseURL: process.env.BASE_URL });
+  const page = await browser.newPage({ baseURL });
 
-  await page.goto('/');
-  await handleAmazonConsent(page);
-
-  await expect(page.locator('#twotabsearchtextbox')).toBeVisible({ timeout: 15000 });
+  await ensureHome(page);
 
   await page.context().storageState({ path: 'storageState.json' });
   await browser.close();

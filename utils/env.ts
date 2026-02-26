@@ -10,4 +10,6 @@ export const ENV = {
   baseUrl: must('BASE_URL'),
   headless: (process.env.HEADLESS ?? 'true').toLowerCase() === 'true',
   workers: Number(process.env.WORKERS ?? '4'),
+  email: must('EMAIL'),
+  password: must('PASSWORD'),
 };
